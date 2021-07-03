@@ -2,16 +2,27 @@ const http = require('http');
 
 const requestListener = (request,response) =>{
     response.setHeader('Content-Type', 'text/html');
-
     const {method} = request;
+
     if (method === 'GET'){
         response.statusCode = 200;
         response.end('this is GET method');
     }
     
     if (method === 'POST'){
-        response.statusCode = 200;
-        response.end('this is POST method');
+        let body = []
+
+        request.on('data',(chunk)=>{
+            body.push(chunk)
+        });
+    
+        request.on('end',()=>{
+            body = Buffer.concat(body).toString();
+            const { name } = JSON.parse(body);
+
+            response.statusCode = 200;
+            response.end(`hai ${name}`);
+        })
     }
 
     if (method === 'PUT'){
