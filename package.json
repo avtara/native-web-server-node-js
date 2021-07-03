@@ -1,0 +1,21 @@
+{
+  "name": "native-web-server-node-js",
+  "version": "1.0.0",
+  "description": "\"# native-web-server-node-js\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avtara/native-web-server-node-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avtara/native-web-server-node-js/issues"
+  },
+  "homepage": "https://github.com/avtara/native-web-server-node-js#readme"
+}
