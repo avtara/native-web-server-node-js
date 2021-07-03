@@ -3,8 +3,26 @@ const http = require('http');
 const requestListener = (request,response) =>{
     response.setHeader('Content-Type', 'text/html');
 
-    response.statusCode = 200;
-    response.end('<h1>halo HTTP server!</h1>');
+    const {method} = request;
+    if (method === 'GET'){
+        response.statusCode = 200;
+        response.end('this is GET method');
+    }
+    
+    if (method === 'POST'){
+        response.statusCode = 200;
+        response.end('this is POST method');
+    }
+
+    if (method === 'PUT'){
+        response.statusCode = 200;
+        response.end('this is PUT method');
+    }
+
+    if (method === 'DELETE'){
+        response.statusCode = 200;
+        response.end('this is DELETE method');
+    }
 };
 
 const server = http.createServer(requestListener);
