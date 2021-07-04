@@ -2,37 +2,38 @@ const http = require('http');
 
 const requestListener = (request,response) =>{
     response.setHeader('Content-Type', 'text/html');
-    const {method} = request;
+    const {method,url} = request;
 
-    if (method === 'GET'){
-        response.statusCode = 200;
-        response.end('this is GET method');
-    }
-    
-    if (method === 'POST'){
-        let body = []
-
-        request.on('data',(chunk)=>{
-            body.push(chunk)
-        });
-    
-        request.on('end',()=>{
-            body = Buffer.concat(body).toString();
-            const { name } = JSON.parse(body);
-
+    if (url === '/'){
+        if (method === 'GET'){
             response.statusCode = 200;
-            response.end(`hai ${name}`);
-        })
-    }
-
-    if (method === 'PUT'){
-        response.statusCode = 200;
-        response.end('this is PUT method');
-    }
-
-    if (method === 'DELETE'){
-        response.statusCode = 200;
-        response.end('this is DELETE method');
+            response.end('Ini adalah homepage');
+        }
+        
+        response.statusCode = 404;
+        response.end(`Halaman tidak dapat diakses dengan ${method} request`);
+    }else if(url === '/about'){
+        if (method === 'GET'){
+            response.statusCode = 200;
+            response.end('Halo! Ini adalah halaman about');
+        } else if(method === 'POST') {
+            let body = [];
+    
+            request.on('data', (chunk) => {
+                body.push(chunk);
+            });
+ 
+            request.on('end', () => {
+                body = Buffer.concat(body).toString();
+                const { name } = JSON.parse(body);
+                response.end(`Halo, ${name}! Ini adalah halaman about`);
+            });
+        } else {
+            response.end(`Halaman tidak dapat diakses menggunakan ${method} request`);
+        }
+    }else{
+        response.statusCode = 404;
+        response.end(`Halaman tidak dapat ditemukan`);
     }
 };
 
