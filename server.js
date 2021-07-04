@@ -1,7 +1,8 @@
 const http = require('http');
 
 const requestListener = (request,response) =>{
-    response.setHeader('Content-Type', 'text/html');
+    response.setHeader('Content-Type', 'aplication/json');
+    response.setHeader('X-Powered-By', 'NodeJS');
     const {method,url} = request;
 
     if (url === '/'){
@@ -10,7 +11,7 @@ const requestListener = (request,response) =>{
             response.end('Ini adalah homepage');
         }
         
-        response.statusCode = 404;
+        response.statusCode = 400;
         response.end(`Halaman tidak dapat diakses dengan ${method} request`);
     }else if(url === '/about'){
         if (method === 'GET'){
@@ -26,9 +27,11 @@ const requestListener = (request,response) =>{
             request.on('end', () => {
                 body = Buffer.concat(body).toString();
                 const { name } = JSON.parse(body);
+                response.statusCode = 200;
                 response.end(`Halo, ${name}! Ini adalah halaman about`);
             });
         } else {
+            response.statusCode = 400;
             response.end(`Halaman tidak dapat diakses menggunakan ${method} request`);
         }
     }else{
